@@ -1,55 +1,34 @@
 <html>
-<head>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript">
-    google.charts.load('current', {packages: ['map']});
-    google.charts.setOnLoadCallback(drawMap);
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["map"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Lat', 'Long', 'Name'],
+          [-24, -46.34, 'Meio1'],
+          [-23.9898, -46.3102, 'Meio2'],
+        ]);
 
-    function drawMap () {
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Address');
-      data.addColumn('string', 'Location');
+        var options = {
+          icons: {
+            default: {
+              normal: 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Ball-Azure-icon.png',
+              selected: 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Ball-Right-Azure-icon.png'
+            }
+          }
+        };
 
-      data.addRows([
-        ['Lake Buena Vista, FL 32830, United States',                  'Walt Disney World'],
-        ['6000 Universal Boulevard, Orlando, FL 32819, United States', 'Universal Studios'],
-        ['7007 Sea World Drive, Orlando, FL 32821, United States',     'Seaworld Orlando' ]
-      ]);
+        var map = new google.visualization.Map(document.getElementById('map_markers_div'));
+        map.draw(data, options);
+      }
 
-      var options = {
-        mapType: 'styledMap',
-        zoomLevel: 12,
-        showTip: true,
-        useMapTypeControl: true,
-        maps: {
-          // Your custom mapTypeId holding custom map styles.
-          styledMap: {
-            name: 'Styled Map', // This name will be displayed in the map type control.
-            styles: [
-              {featureType: 'poi.attraction',
-               stylers: [{color: '#fce8b2'}]
-              },
-              {featureType: 'road.highway',
-               stylers: [{hue: '#0277bd'}, {saturation: -50}]
-              },
-              {featureType: 'road.highway',
-               elementType: 'labels.icon',
-               stylers: [{hue: '#000'}, {saturation: 100}, {lightness: 50}]
-              },
-              {featureType: 'landscape',
-               stylers: [{hue: '#259b24'}, {saturation: 10}, {lightness: -22}]
-              }
-        ]}}
-      };
+    </script>
+  </head>
 
-      var map = new google.visualization.Map(document.getElementById('map_div'));
-
-      map.draw(data, options);
-    }
-  </script>
-</head>
-<body>
-<div id="map_div" style="height: 500px; width: 900px"></div>
-</body>
+  <body>
+    <div id="map_markers_div" style="width: 100%; height: 100%"></div>
+  </body>
 </html>
